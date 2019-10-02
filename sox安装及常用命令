@@ -1,0 +1,74 @@
+Sox(Sound eXchange)是一款强大的音频处理工具，能够合并、拆分多通道；能播放能录音；可以截取音频的某一部分或删除开头结尾部分。能满足大部分音频处理的操作需求。
+1. 安装
+
+可以自己下载安装，戳此下载。或者通过下面的命令安装。
+
+    Ubuntu 安装命令
+
+    sudo apt install sox
+    sudo apt install lame
+    sudo apt install libsox-fmt-all
+
+后面两个是解码包，遇到不支持的格式按需下载即可。
+
+Mac 安装命令
+
+brew install sox
+
+    如果安装遇到问题可以尝试自己编译。
+
+2. 常用命令
+
+    播放音频
+
+    play audiofile.wav
+
+查看音频信息
+
+soxi audiofile.wav
+sox audiofile.wav -n stat
+
+修改频率、通道数、位深
+
+sox infile.wav -r 48k -c 1 -b 16 outfile.wav
+
+如果输入是mp3也是一样的命令，sox会通过后缀进行判断。
+
+wav转为raw数据
+
+sox in.wav -b 16 -e signed-integer -c 1 -r 48k -t raw out.raw
+
+raw再转为wav
+
+sox -b 16 -e signed-integer -c 1 -r 48k -t raw out.raw out.wav
+
+两个单通道合成一个立体声
+
+sox -M input.l.wav input.r.wav output.wav
+
+提取第二通道的数据
+
+sox in.wav out.wav remix 2
+
+第一通道是1，从1开始递增。
+
+删除开始和结尾的250ms
+
+sox in.wav out.wav trim 0.25 trim 0 -0.25
+
+参数trim可以同时使用多次，单位是s。"trim 0.25"删除开头，"trim 0 -0.25"删除结尾。
+
+截取特定一段的命令格式是"sox input output trim <start> <duration>" 或者 "sox input output trim <start> =<end>"，以下命令都是截取自0.1s之后的0.8s
+
+sox in.wav out.wav trim 0.1 0.8
+sox in.wav out.wav trim 0:00.1 =00:00.9
+
+将音频归一化到指定的dB值，超过的缩小，不足的增大
+
+sox in.wav out.wav norm -3
+
+"norm -3"表示归一化到-3dB，和"gain -n -3"、"--norm=-3"效果一致。
+
+将目录下所有的mp3文件处理成wav文件，并修改后缀：
+
+for  f in *.mp3; do sox $f -c 1 -r 48000 "${f%.mp3}.wav"; done
