@@ -1,5 +1,6 @@
 
-Sox(Sound eXchange)是一款强大的音频处理工具，能够合并、拆分多通道；能播放能录音；可以截取音频的某一部分或删除开头结尾部分。能满足大部分音频处理的操作需求。
+Sox(Sound eXchange)是一款强大的音频处理工具，能够合并、拆分多通道；能播放能录音；可以截取音频的某一部分或删除开头结尾部分。能满足大部分音频
+处理的操作需求。
 1. 安装
 
 可以自己下载安装，戳此下载。或者通过下面的命令安装。
@@ -59,7 +60,8 @@ sox in.wav out.wav trim 0.25 trim 0 -0.25
 
 参数trim可以同时使用多次，单位是s。"trim 0.25"删除开头，"trim 0 -0.25"删除结尾。
 
-截取特定一段的命令格式是"sox input output trim <start> <duration>" 或者 "sox input output trim <start> =<end>"，以下命令都是截取自0.1s之后的0.8s
+截取特定一段的命令格式是"sox input output trim <start> <duration>" 或者 "sox input output trim <start> =<end>"，以下命令都是截取
+自0.1s之后的0.8s
 
 sox in.wav out.wav trim 0.1 0.8
 sox in.wav out.wav trim 0:00.1 =00:00.9
@@ -73,3 +75,6 @@ sox in.wav out.wav norm -3
 将目录下所有的mp3文件处理成wav文件，并修改后缀：
 
 for  f in *.mp3; do sox $f -c 1 -r 48000 "${f%.mp3}.wav"; done
+
+
+
